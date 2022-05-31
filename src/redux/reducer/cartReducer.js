@@ -4,6 +4,7 @@ const INITIAL_STATE = {
 
 export default function cartReducer(state = INITIAL_STATE, action){
 
+    // eslint-disable-next-line default-case
     switch(action.type){
         case "ADDITEM":
         
@@ -11,7 +12,16 @@ export default function cartReducer(state = INITIAL_STATE, action){
         console.log(indexItemAdd);
         
         if(indexItemAdd !== -1){
-
+            const updatedQuantity = {
+                ...state.cart[indexItemAdd],
+                quantity: state.cart[indexItemAdd].quantity + action.payload.quantity
+            }
+            const newArr = [...state.cart]
+            newArr.splice(indexItemAdd, 1, updatedQuantity)
+            console.log(newArr);
+            return {
+                cart: newArr
+            }
         } else {
             const newArr = [...state.cart]
             newArr.push(action.payload)
